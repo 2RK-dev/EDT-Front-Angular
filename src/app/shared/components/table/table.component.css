@@ -1,3 +1,5 @@
+@reference "tailwindcss"
+
 .table-container {
   @apply w-full overflow-x-auto shadow-md rounded-lg bg-white border border-slate-200;
 }
