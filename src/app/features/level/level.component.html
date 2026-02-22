@@ -1,0 +1,79 @@
+<div class="p-6 max-w-7xl mx-auto">
+  <div class="flex justify-between items-center mb-6">
+    <div>
+      <h1 class="text-2xl font-bold text-slate-800">Niveaux et Groupes</h1>
+      <p class="text-sm text-slate-500 mt-1">Gérez vos niveaux et classes en un seul endroit.</p>
+    </div>
+    <div class="flex justify-center">
+      <div class="flex bg-slate-100 p-1 rounded-xl shadow-inner border border-slate-200">
+        <button
+          class="switch-btn"
+          [class.active]="currentView === 'levels'"
+          (click)="switchView('levels')">
+          Niveaux
+        </button>
+        <button
+          class="switch-btn"
+          [class.active]="currentView === 'groups'"
+          (click)="switchView('groups')">
+          Groupes
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex justify-end mb-4">
+    <app-button>
+      + Nouveau {{ currentView === 'levels' ? 'Niveau' : 'Groupe' }}
+    </app-button>
+  </div>
+
+  @if (isLoading$ | async) {
+    <div class="loading-spinner">
+      Chargement en cours...
+    </div>
+  }
+
+  @if (currentView === "levels") {
+    @if (levels$ | async; as levels) {
+      <div class="table-wrapper fadeIn">
+        <app-table
+          [data]="levels"
+          [columns]="levelColumns"
+          [customTemplates]="{ 'actions': templateActionsLevels }">
+        </app-table>
+      </div>
+    }
+  } @else if (currentView === "groups") {
+    @if ((groups$ | async); as groups) {
+      <div class="table-wrapper fadeIn">
+        <app-table
+          [data]="groups"
+          [columns]="groupColumns"
+          [customTemplates]="{
+        'levelName': templateLevelBadge,
+        'actions': templateActionsGroups
+      }">
+        </app-table>
+      </div>
+    }
+  }
+
+</div>
+
+<ng-template #templateLevelBadge let-levelName>
+  <span class="badge-level">{{ levelName }}</span>
+</ng-template>
+
+<ng-template #templateActionsLevels>
+  <app-button variant="outline" size="sm" class="mr-3">
+    <lucide-icon [img]="SquarePen"></lucide-icon>
+  </app-button>
+  <app-button variant="danger" size="sm">
+    <lucide-icon [img]="Trash2"></lucide-icon>
+  </app-button>
+</ng-template>
+
+<ng-template #templateActionsGroups>
+  <button class="text-blue-500 hover:text-blue-700 font-medium text-sm mr-3">Gérer élèves</button>
+</ng-template>

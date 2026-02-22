@@ -1,0 +1,40 @@
+@reference "tailwindcss";
+
+.switch-btn {
+  @apply px-6 py-2 rounded-lg text-sm font-semibold text-slate-500 transition-all duration-300 ease-in-out cursor-pointer;
+}
+
+.switch-btn:hover:not(.active) {
+  @apply text-slate-700 bg-slate-200/50;
+}
+
+.switch-btn.active {
+  @apply bg-white text-blue-600 shadow-md transform scale-100;
+}
+
+.table-wrapper {
+  @apply bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden;
+}
+
+.badge-level {
+  @apply bg-indigo-50 text-indigo-700 px-2.5 py-1 rounded-md text-xs font-bold uppercase tracking-wide border border-indigo-100;
+}
+
+.loading-spinner {
+  @apply text-center py-8 text-slate-500 font-medium animate-pulse;
+}
+
+.fadeIn {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
