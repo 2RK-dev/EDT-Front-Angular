@@ -1,4 +1,4 @@
-export interface GroupDTO {
+export interface Group {
   id: number;
   name: string;
   type: string;
@@ -8,4 +8,4 @@ export interface GroupDTO {
   levelId: number;
 }
 
-export interface GroupPostDTO extends Omit<GroupDTO, "id">{}
+export interface GroupPost extends Omit<Group, "id">{}
