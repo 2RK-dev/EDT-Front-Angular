@@ -1,0 +1,36 @@
+.table-container {
+  @apply w-full overflow-x-auto shadow-md rounded-lg bg-white border border-slate-200;
+}
+
+.custom-table {
+  @apply w-full text-left border-collapse text-sm text-slate-700 font-sans;
+}
+
+.custom-table th,
+.custom-table td {
+  @apply px-4 py-3 border-b border-slate-200;
+}
+
+.custom-table th {
+  @apply bg-slate-50 align-top;
+}
+
+.custom-table tbody tr {
+  @apply hover:bg-slate-50 transition-colors duration-200;
+}
+
+.header-title {
+  @apply font-semibold uppercase text-xs tracking-wider mb-2 text-slate-500;
+}
+
+.filter-input {
+  @apply w-full px-2 py-1.5 border border-slate-300 rounded text-sm outline-none transition-all duration-200 bg-white;
+}
+
+.filter-input:focus {
+  @apply border-blue-500 ring-2 ring-blue-100;
+}
+
+.empty-state {
+  @apply text-center p-8 text-slate-400 italic bg-slate-50/50;
+}
