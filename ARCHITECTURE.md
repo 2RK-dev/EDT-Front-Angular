@@ -1,5 +1,33 @@
 # Architecture & Design Guidelines
 
+## Table of contents
+
+<!-- TOC -->
+* [Architecture & Design Guidelines](#architecture--design-guidelines)
+  * [Table of contents](#table-of-contents)
+  * [Project Structure](#project-structure)
+  * [Folder Responsibilities](#folder-responsibilities)
+    * [core/](#core)
+    * [shared/](#shared)
+    * [features/](#features)
+  * [Naming Conventions](#naming-conventions)
+    * [Files](#files)
+    * [Classes and Interfaces](#classes-and-interfaces)
+    * [Variables and Constants](#variables-and-constants)
+    * [Functions and Methods](#functions-and-methods)
+  * [Best Practices](#best-practices)
+    * [Component Design](#component-design)
+    * [State Management](#state-management)
+    * [Services](#services)
+    * [Type Safety](#type-safety)
+    * [Performance](#performance)
+    * [Testing](#testing)
+    * [Error Handling](#error-handling)
+  * [Path Aliases](#path-aliases)
+  * [Code Style](#code-style)
+  * [Git Commit Convention](#git-commit-convention)
+<!-- TOC -->
+
 ## Project Structure
 
 ```text
@@ -65,54 +93,54 @@ Contains feature modules organized by domain. Each feature is self-contained and
 
 ### Files
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Component | `<name>.ts` | `schedule.ts` |
-| Template | `<name>.html` | `schedule.html` |
-| Styles | `<name>.css` | `schedule.css` |
-| Service | `<name>.service.ts` | `schedule.service.ts` |
-| API Service | `<name>.api.ts` | `schedule.api.ts` |
-| Store | `<name>.store.ts` | `schedule.store.ts` |
+| Type            | Pattern                          | Example                                   |
+|-----------------|----------------------------------|-------------------------------------------|
+| Component       | `<name>.ts`                      | `schedule.ts`                             |
+| Template        | `<name>.html`                    | `schedule.html`                           |
+| Styles          | `<name>.css`                     | `schedule.css`                            |
+| Service         | `<name>.service.ts`              | `schedule.service.ts`                     |
+| API Service     | `<name>.api.ts`                  | `schedule.api.ts`                         |
+| Store           | `<name>.store.ts`                | `schedule.store.ts`                       |
 | Model/Interface | `<name>.model.ts` or `<name>.ts` | `schedule.model.ts` or `schedule-item.ts` |
-| Guard | `<name>.guard.ts` | `auth.guard.ts` |
-| Interceptor | `<name>.interceptor.ts` | `auth.interceptor.ts` |
-| Pipe | `<name>.pipe.ts` | `duration.pipe.ts` |
-| Directive | `<name>.directive.ts` | `highlight.directive.ts` |
+| Guard           | `<name>.guard.ts`                | `auth.guard.ts`                           |
+| Interceptor     | `<name>.interceptor.ts`          | `auth.interceptor.ts`                     |
+| Pipe            | `<name>.pipe.ts`                 | `duration.pipe.ts`                        |
+| Directive       | `<name>.directive.ts`            | `highlight.directive.ts`                  |
 
 ### Classes and Interfaces
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Component | `PascalCase` | `ScheduleComponent` |
-| Service | `PascalCase + Service` | `ScheduleService` |
-| API Service | `PascalCase + Api` | `ScheduleApi` |
-| Store | `PascalCase + Store` | `ScheduleStore` |
-| Guard | `PascalCase + Guard` | `AuthGuard` |
-| Interceptor | `PascalCase + Interceptor` | `AuthInterceptor` |
-| Pipe | `PascalCase + Pipe` | `DurationPipe` |
-| Directive | `PascalCase + Directive` | `HighlightDirective` |
-| Interface | `PascalCase` | `ScheduleItem`, `User` |
-| Type Alias | `PascalCase` | `ScheduleFilter` |
-| Enum | `PascalCase` | `UserRole`, `DayOfWeek` |
+| Type        | Pattern                    | Example                 |
+|-------------|----------------------------|-------------------------|
+| Component   | `PascalCase`               | `ScheduleComponent`     |
+| Service     | `PascalCase + Service`     | `ScheduleService`       |
+| API Service | `PascalCase + Api`         | `ScheduleApi`           |
+| Store       | `PascalCase + Store`       | `ScheduleStore`         |
+| Guard       | `PascalCase + Guard`       | `AuthGuard`             |
+| Interceptor | `PascalCase + Interceptor` | `AuthInterceptor`       |
+| Pipe        | `PascalCase + Pipe`        | `DurationPipe`          |
+| Directive   | `PascalCase + Directive`   | `HighlightDirective`    |
+| Interface   | `PascalCase`               | `ScheduleItem`, `User`  |
+| Type Alias  | `PascalCase`               | `ScheduleFilter`        |
+| Enum        | `PascalCase`               | `UserRole`, `DayOfWeek` |
 
 ### Variables and Constants
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Variables | `camelCase` | `scheduleItems`, `currentUser` |
-| Constants | `UPPER_SNAKE_CASE` | `API_BASE_URL`, `MAX_RETRY_COUNT` |
-| Private fields | `camelCase` (no underscore prefix) | `items`, `isLoading` |
-| Signals | `camelCase` | `scheduleItems = signal([])` |
-| Observables | `camelCase$` (with $ suffix) | `scheduleItems$`, `user$` |
+| Type           | Pattern                            | Example                           |
+|----------------|------------------------------------|-----------------------------------|
+| Variables      | `camelCase`                        | `scheduleItems`, `currentUser`    |
+| Constants      | `UPPER_SNAKE_CASE`                 | `API_BASE_URL`, `MAX_RETRY_COUNT` |
+| Private fields | `camelCase` (no underscore prefix) | `items`, `isLoading`              |
+| Signals        | `camelCase`                        | `scheduleItems = signal([])`      |
+| Observables    | `camelCase$` (with $ suffix)       | `scheduleItems$`, `user$`         |
 
 ### Functions and Methods
 
-| Type | Pattern | Example |
-|------|---------|---------|
-| Public methods | `camelCase` | `getSchedule()`, `updateItem()` |
+| Type            | Pattern                            | Example                            |
+|-----------------|------------------------------------|------------------------------------|
+| Public methods  | `camelCase`                        | `getSchedule()`, `updateItem()`    |
 | Private methods | `camelCase` (no underscore prefix) | `processData()`, `validateInput()` |
-| Boolean methods | `is/has/can + PascalCase` | `isValid()`, `hasPermission()` |
-| Event handlers | `on + PascalCase` | `onClick()`, `onSubmit()` |
+| Boolean methods | `is/has/can + PascalCase`          | `isValid()`, `hasPermission()`     |
+| Event handlers  | `on + PascalCase`                  | `onClick()`, `onSubmit()`          |
 
 ## Best Practices
 
@@ -194,7 +222,7 @@ Configure in `tsconfig.json`:
 
 ## Git Commit Convention
 
-Follow conventional commits format:
+Follow the conventional commits format:
 
 ```
 <type>(<scope>): <subject>
