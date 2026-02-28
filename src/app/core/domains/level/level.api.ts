@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {delay, Observable, of} from 'rxjs';
-import {Level} from './level.model';
+import {Level, LevelPost} from './level.model';
 import {mockLevels} from './level.mock';
 
 @Injectable({ providedIn: 'root' })
@@ -19,7 +19,7 @@ export class LevelApi {
     return this.http.get<Level[]>(this.API_URL);
   }
 
-  createLevel(level: Partial<Level>): Observable<Level> {
+  createLevel(level: LevelPost): Observable<Level> {
     if (this.USE_MOCK) {
       const newLevel: Level = {
         id: this.mockData.at(-1)?.id ? this.mockData.at(-1)!.id + 1 : 1,
@@ -32,7 +32,7 @@ export class LevelApi {
     return this.http.post<Level>(this.API_URL, level);
   }
 
-  updateLevel(id: number, level: Partial<Level>): Observable<Level> {
+  updateLevel(id: number, level: LevelPost): Observable<Level> {
     if (this.USE_MOCK) {
       const index = this.mockData.findIndex(l => l.id === id);
       if (index !== -1) {

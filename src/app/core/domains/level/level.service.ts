@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {LevelApi} from './level.api';
 import {LevelStore} from './level.store';
-import {Level} from './level.model';
+import {Level, LevelPost} from './level.model';
 import {catchError, finalize, tap} from 'rxjs/operators';
 import {throwError} from 'rxjs';
 
@@ -40,7 +40,7 @@ export class LevelService {
     ).subscribe();
   }
 
-  createLevel(newLevel: Partial<Level>): void {
+  createLevel(newLevel:LevelPost): void {
     this.levelStore.setLoading(true);
 
     this.levelApi.createLevel(newLevel).pipe(
@@ -55,7 +55,7 @@ export class LevelService {
     ).subscribe();
   }
 
-  updateLevel(id: number, updatedLevel: Partial<Level>): void {
+  updateLevel(id: number, updatedLevel: LevelPost): void {
     this.levelStore.setLoading(true);
 
     this.levelApi.updateLevel(id, updatedLevel).pipe(
