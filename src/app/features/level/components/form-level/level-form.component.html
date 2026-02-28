@@ -1,0 +1,8 @@
+<app-form
+  [fields]="levelFields"
+  [initialData]="level"
+  [isLoading]="isLoading"
+  [submitLabel]="level ? 'Mettre à jour' : 'Créer le niveau'"
+  (cancel)="cancel.emit()"
+  (save)="onFormSubmit($event)">
+</app-form>
