@@ -55,6 +55,21 @@ export class LevelService {
     ).subscribe();
   }
 
+  updateLevel(id: number, updatedLevel: Partial<Level>): void {
+    this.levelStore.setLoading(true);
+
+    this.levelApi.updateLevel(id, updatedLevel).pipe(
+      tap((level: Level) => {
+        this.levelStore.updateLevel(level);
+      }),
+      catchError((error) => {
+        this.levelStore.setError('Erreur lors de la mise à jour');
+        return throwError(() => error);
+      }),
+      finalize(() => this.levelStore.setLoading(false))
+    ).subscribe();
+  }
+
   deleteLevel(id: number): void {
     this.levelApi.deleteLevel(id).pipe(
       tap(() => {

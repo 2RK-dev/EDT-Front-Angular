@@ -22,6 +22,12 @@ export class LevelStore {
     this._levels.next([...currentLevels, level]);
   }
 
+  updateLevel(level: Level) {
+    const currentLevels = this._levels.getValue();
+    const updatedLevels = currentLevels.map(l => l.id === level.id ? level : l);
+    this._levels.next(updatedLevels);
+  }
+
   removeLevel(id: number) {
     const currentLevels = this._levels.getValue();
     this._levels.next(currentLevels.filter(l => l.id !== id));
@@ -34,4 +40,5 @@ export class LevelStore {
   setError(error: string | null) {
     this._error.next(error);
   }
+
 }

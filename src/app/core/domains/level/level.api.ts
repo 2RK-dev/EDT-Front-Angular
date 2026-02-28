@@ -22,7 +22,7 @@ export class LevelApi {
   createLevel(level: Partial<Level>): Observable<Level> {
     if (this.USE_MOCK) {
       const newLevel: Level = {
-        id: this.mockData.length + 1,
+        id: this.mockData.at(-1)?.id ? this.mockData.at(-1)!.id + 1 : 1,
         name: level.name || '',
         abr: level.abr || ''
       };
@@ -30,6 +30,19 @@ export class LevelApi {
       return of(newLevel).pipe(delay(300));
     }
     return this.http.post<Level>(this.API_URL, level);
+  }
+
+  updateLevel(id: number, level: Partial<Level>): Observable<Level> {
+    if (this.USE_MOCK) {
+      const index = this.mockData.findIndex(l => l.id === id);
+      if (index !== -1) {
+        this.mockData[index] = { ...this.mockData[index], ...level };
+        return of(this.mockData[index]).pipe(delay(300));
+      } else {
+        throw new Error(`Level id ${id} not found`);
+      }
+    }
+    return this.http.put<Level>(`${this.API_URL}/${id}`, level);
   }
 
   deleteLevel(id: number): Observable<void> {
