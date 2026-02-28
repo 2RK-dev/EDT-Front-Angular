@@ -1,0 +1,80 @@
+@if (form) {
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+
+    @for (field of fields; track $index) {
+      <div class="form-group">
+        <label [for]="field.key" class="form-label">
+          {{ field.label }}
+          @if (field.validators) {
+            <span class="text-red-500">*</span>
+          }
+        </label>
+
+        @if (['text', 'number', 'email'].includes(field.type)) {
+          <input
+            [type]="field.type"
+            [id]="field.key"
+            [formControlName]="field.key"
+            class="form-control"
+            [class.input-error]="form.get(field.key)?.invalid && form.get(field.key)?.touched">
+        } @else if (field.type === 'textarea') {
+          <textarea
+            [id]="field.key"
+            [formControlName]="field.key"
+            class="form-control"
+            rows="3"
+            [class.input-error]="form.get(field.key)?.invalid && form.get(field.key)?.touched">
+    </textarea>
+        } @else if (field.type === 'select') {
+          <select
+            [id]="field.key"
+            [formControlName]="field.key"
+            class="form-control"
+            [class.input-error]="form.get(field.key)?.invalid && form.get(field.key)?.touched">
+            <option value="" disabled>Sélectionnez une option</option>
+            <option *ngFor="let opt of field.options" [value]="opt.value">
+              {{ opt.label }}
+            </option>
+          </select>
+        }
+
+        @if (form.get(field.key)?.invalid && form.get(field.key)?.touched) {
+          <div class="error-container">
+            @for (error of field.errorMessages | keyvalue; track $index) {
+              <ng-container>
+                @if (hasError(field, error.key)) {
+                  <span class="error-text">
+              {{ error.value }}
+              </span>
+                }
+              </ng-container>
+            }
+          </div>
+        }
+
+
+      </div>
+    }
+
+
+
+    <div class="form-actions">
+      <app-button
+        type="button"
+        variant="secondary"
+        (btnClick)="cancel.emit()"
+        [disabled]="isLoading">
+        Annuler
+      </app-button>
+
+      <app-button
+        type="submit"
+        variant="primary"
+        [loading]="isLoading">
+        {{ initialData ? 'Mettre à jour' : submitLabel }}
+      </app-button>
+    </div>
+
+  </form>
+}
+
