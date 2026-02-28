@@ -66,7 +66,7 @@
 </ng-template>
 
 <ng-template #templateActionsLevels let-currentRow="row">
-  <app-button variant="outline" size="sm" class="mr-3" (click)="openEditModal(currentRow)">
+  <app-button variant="outline" size="sm" class="mr-3" (click)="selectedLevel=currentRow; isModalLevelOpen = true">
     <lucide-icon [img]="SquarePen"></lucide-icon>
   </app-button>
   <app-button variant="danger" size="sm" (click)="onDeleteLevel(currentRow)">
@@ -79,13 +79,29 @@
 </ng-template>
 
 <app-modal
-  [(isOpen)]="isModalOpen"
+  [(isOpen)]="isModalLevelOpen"
   [title]="selectedLevel ? 'Modifier le niveau' : 'Nouveau niveau'">
   <app-level-form
     [level]="selectedLevel"
     [isLoading]="(isLoading$ | async) ?? false"
-    (cancel)="closeModal()"
+    (cancel)="isModalLevelOpen = false"
     (save)="onSaveLevel($event)">
   </app-level-form>
+</app-modal>
+
+<app-modal
+  [(isOpen)]="isGroupModalOpen"
+  [title]="selectedGroup ? 'Modifier le groupe' : 'Nouveau groupe'">
+
+  @if (levels$ | async; as levels) {
+    <app-group-form
+      [group]="selectedGroup"
+      [levels]="levels"
+      [isLoading]="(isLoading$ | async) ?? false"
+      (cancel)="isGroupModalOpen = false"
+      (save)="onSaveGroup($event)">
+    </app-group-form>
+  }
+
 </app-modal>
 

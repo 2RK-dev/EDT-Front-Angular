@@ -8,13 +8,15 @@ import {ButtonComponent} from '@shared/components/button/button.component';
 import {Level, LevelPost} from '@core/domains/level/level.model';
 import {LevelFormComponent} from '@features/level/components/form-level/level-form.component';
 import {ModalComponent} from '@shared/components/modal/modal.component';
+import {Group, GroupPost} from '@core/domains/group/group.model';
+import {GroupFormComponent} from '@features/level/components/group-form/group-form.component';
 
 type ViewMode = 'levels' | 'groups';
 
 @Component({
   selector: 'app-level-container',
   standalone: true,
-  imports: [CommonModule, TableComponent, LucideAngularModule, ButtonComponent, LevelFormComponent, ModalComponent],
+  imports: [CommonModule, TableComponent, LucideAngularModule, ButtonComponent, LevelFormComponent, ModalComponent, GroupFormComponent],
   templateUrl: './level.component.html',
   styleUrls: ['./level.component.css']
 })
@@ -24,8 +26,11 @@ export class LevelComponent implements OnInit {
   groups$;
   isLoading$;
 
-  isModalOpen = false;
+  isModalLevelOpen = false;
   selectedLevel: Level | null = null;
+
+  isGroupModalOpen = false;
+  selectedGroup: Group | null = null;
 
   readonly SquarePen= SquarePen;
   readonly Trash2= Trash2;
@@ -60,19 +65,15 @@ export class LevelComponent implements OnInit {
     this.currentView = view;
   }
 
-  openAddModal() {
-    this.selectedLevel = null;
-    this.isModalOpen = true;
-  }
-
-  openEditModal(level: Level): void {
-    this.selectedLevel = level;
-    this.isModalOpen = true;
-  }
-
-  closeModal(): void {
-    this.isModalOpen = false;
-    this.selectedLevel = null;
+  openAddModal(){
+    if (this.currentView === 'levels') {
+      this.selectedLevel = null;
+      this.isModalLevelOpen = true;
+    }
+    else {
+      this.selectedGroup = null;
+      this.isGroupModalOpen = true;
+    }
   }
 
   onSaveLevel(levelData: LevelPost): void {
@@ -81,12 +82,21 @@ export class LevelComponent implements OnInit {
     } else {
       this.levelService.createLevel(levelData);
     }
-    this.closeModal();
+    this.isModalLevelOpen = false;
   }
 
   onDeleteLevel(level: Level): void {
     if (confirm(`Êtes-vous sûr de vouloir supprimer le niveau "${level.name}" ?`)) {
       this.levelService.deleteLevel(level.id);
     }
+  }
+
+  onSaveGroup(groupPayload: GroupPost) {
+    if (this.selectedGroup) {
+      this.groupService.updateGroup(this.selectedGroup.id, groupPayload);
+    } else {
+      this.groupService.createGroup(groupPayload);
+    }
+    this.isGroupModalOpen = false;
   }
 }
