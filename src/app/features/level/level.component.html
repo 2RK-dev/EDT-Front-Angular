@@ -74,8 +74,13 @@
   </app-button>
 </ng-template>
 
-<ng-template #templateActionsGroups>
-  <button class="text-blue-500 hover:text-blue-700 font-medium text-sm mr-3">Gérer élèves</button>
+<ng-template #templateActionsGroups let-currentRow="row">
+  <app-button variant="outline" size="sm" class="mr-3" (click)="selectedGroup=currentRow; isGroupModalOpen = true">
+    <lucide-icon [img]="SquarePen"></lucide-icon>
+  </app-button>
+  <app-button variant="danger" size="sm" (click)="onDeleteGroup(currentRow)">
+    <lucide-icon [img]="Trash2"></lucide-icon>
+  </app-button>
 </ng-template>
 
 <app-modal

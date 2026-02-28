@@ -99,4 +99,10 @@ export class LevelComponent implements OnInit {
     }
     this.isGroupModalOpen = false;
   }
+
+  onDeleteGroup(group: Group): void {
+    if (confirm(`Êtes-vous sûr de vouloir supprimer le groupe "${group.name}" ?`)) {
+      this.groupService.deleteGroup(group.id);
+    }
+  }
 }
