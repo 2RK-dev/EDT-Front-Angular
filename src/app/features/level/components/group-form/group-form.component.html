@@ -1,0 +1,8 @@
+<app-form
+  [fields]="groupFields"
+  [initialData]="group"
+  [isLoading]="isLoading"
+  [submitLabel]="group ? 'Mettre à jour le groupe' : 'Créer le groupe'"
+  (cancel)="cancel.emit()"
+  (save)="onFormSubmit($event)">
+</app-form>

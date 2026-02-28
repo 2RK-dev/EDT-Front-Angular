@@ -4,7 +4,6 @@ export interface Group {
   type: string;
   classe: string;
   size: number;
-  levelAbr: string;
   levelId: number;
 }
 

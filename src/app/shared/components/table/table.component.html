@@ -1,0 +1,46 @@
+<div class="table-container">
+  <table class="custom-table">
+    <thead>
+    <tr>
+      @for (col of columns; track $index) {
+        <th>
+          <div class="header-title">{{ col.header }}</div>
+          @if (col.filterable) {
+            <input
+              type="text"
+              class="filter-input"
+              placeholder="Filtrer..."
+              (input)="onFilterChange(col.key, $event)">
+          }
+        </th>
+      }
+    </tr>
+    </thead>
+
+    <tbody>
+      @for (row of filteredData; track $index) {
+        <tr>
+          @for (col of columns; track $index) {
+            <td>
+              @if (customTemplates[col.key]) {
+                <ng-container
+                  *ngTemplateOutlet="customTemplates[col.key]; context: { $implicit: getRowValue(row, col.key), row: row }">
+                </ng-container>
+              } @else {
+                {{ getRowValue(row, col.key) }}
+              }
+
+            </td>
+          }
+        </tr>
+      }
+      @if (filteredData.length === 0) {
+        <tr>
+          <td [colSpan]="columns.length" class="empty-state">
+            Aucune donnée correspondante
+          </td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>
