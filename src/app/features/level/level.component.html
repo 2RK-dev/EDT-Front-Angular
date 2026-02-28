@@ -23,7 +23,7 @@
   </div>
 
   <div class="flex justify-end mb-4">
-    <app-button>
+    <app-button variant="primary" (click)="openAddModal()">
       + Nouveau {{ currentView === 'levels' ? 'Niveau' : 'Groupe' }}
     </app-button>
   </div>
@@ -65,11 +65,11 @@
   <span class="badge-level">{{ levelName }}</span>
 </ng-template>
 
-<ng-template #templateActionsLevels>
-  <app-button variant="outline" size="sm" class="mr-3">
+<ng-template #templateActionsLevels let-currentRow="row">
+  <app-button variant="outline" size="sm" class="mr-3" (click)="openEditModal(currentRow)">
     <lucide-icon [img]="SquarePen"></lucide-icon>
   </app-button>
-  <app-button variant="danger" size="sm">
+  <app-button variant="danger" size="sm" (click)="onDeleteLevel(currentRow)">
     <lucide-icon [img]="Trash2"></lucide-icon>
   </app-button>
 </ng-template>
@@ -77,3 +77,15 @@
 <ng-template #templateActionsGroups>
   <button class="text-blue-500 hover:text-blue-700 font-medium text-sm mr-3">Gérer élèves</button>
 </ng-template>
+
+<app-modal
+  [(isOpen)]="isModalOpen"
+  [title]="selectedLevel ? 'Modifier le niveau' : 'Nouveau niveau'">
+  <app-level-form
+    [level]="selectedLevel"
+    [isLoading]="(isLoading$ | async) ?? false"
+    (cancel)="closeModal()"
+    (save)="onSaveLevel($event)">
+  </app-level-form>
+</app-modal>
+

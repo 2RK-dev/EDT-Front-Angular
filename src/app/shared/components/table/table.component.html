@@ -23,10 +23,8 @@
           @for (col of columns; track $index) {
             <td>
               @if (customTemplates[col.key]) {
-                <ng-container>
-                  <ng-container
-                    *ngTemplateOutlet="customTemplates[col.key]; context: { $implicit: getRowValue(row, col.key), row: row }">
-                  </ng-container>
+                <ng-container
+                  *ngTemplateOutlet="customTemplates[col.key]; context: { $implicit: getRowValue(row, col.key), row: row }">
                 </ng-container>
               } @else {
                 {{ getRowValue(row, col.key) }}
