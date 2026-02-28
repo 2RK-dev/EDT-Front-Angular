@@ -1,0 +1,31 @@
+@if (isOpen) {
+  <div
+    class="modal-backdrop"
+    (mousedown)="onBackdropClick($event)">
+
+    <div
+      class="modal-panel"
+      [ngClass]="modalSizeClass"
+      (mousedown)="$event.stopPropagation()">
+      <div class="modal-header">
+        <ng-content select="[modal-header]">
+          @if (title) {
+            <h3 class="modal-title">{{ title }}</h3>
+          }
+        </ng-content>
+        <button class="modal-close-btn" (click)="close()" aria-label="Fermer">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+               stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <ng-content></ng-content>
+      </div>
+      <div class="modal-footer">
+        <ng-content select="[modal-footer]"></ng-content>
+      </div>
+    </div>
+  </div>
+}
