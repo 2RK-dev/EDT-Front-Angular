@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BehaviorSubject} from 'rxjs';
-import {Group} from './group.model';
+import {Group, GroupPost} from './group.model';
 
 @Injectable({ providedIn: 'root' })
 export class GroupStore {
@@ -20,6 +20,17 @@ export class GroupStore {
   addGroup(group: Group) {
     const currentGroups = this._groups.getValue();
     this._groups.next([...currentGroups, group]);
+  }
+
+  updateGroup(id: number, group: GroupPost) {
+    const currentGroups = this._groups.getValue();
+    const index = currentGroups.findIndex(g => g.id === id);
+    if (index !== -1) {
+      const updatedGroup: Group = { ...currentGroups[index], ...group };
+      const updatedGroups = [...currentGroups];
+      updatedGroups[index] = updatedGroup;
+      this._groups.next(updatedGroups);
+    }
   }
 
   removeGroup(id: number) {

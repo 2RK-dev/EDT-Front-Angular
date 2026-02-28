@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Group} from './group.model';
+import {Group, GroupPost} from './group.model';
 
 @Injectable({ providedIn: 'root' })
 export class GroupApi {
@@ -16,11 +16,15 @@ export class GroupApi {
     return this.http.get<Group[]>(`/levels/${levelId}/groups`);
   }
 
-  createGroup(group: Partial<Group>): Observable<Group> {
+  createGroup(group: GroupPost): Observable<Group> {
     return this.http.post<Group>('/groups', group);
   }
 
   deleteGroup(id: number): Observable<void> {
     return this.http.delete<void>(`/groups/${id}`);
+  }
+
+  updateGroup(id: number, updatedGroup: GroupPost) {
+    return this.http.put<Group>(`/groups/${id}`, updatedGroup);
   }
 }
